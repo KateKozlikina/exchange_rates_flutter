@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:exchange_rates_flutter/redux/AppState.dart';
-import 'package:exchange_rates_flutter/redux/middleware.dart';
+import 'package:exchange_rates_flutter/redux/actions.dart';
 import 'package:exchange_rates_flutter/model/Currency.dart';
+import 'package:exchange_rates_flutter/model/Converter.dart';
 import 'package:exchange_rates_flutter/common/Drawer.dart';
+import 'package:exchange_rates_flutter/model/ViewModel.dart';
+
 class CurrencySelect extends StatelessWidget {
 
   @override
@@ -12,7 +15,7 @@ class CurrencySelect extends StatelessWidget {
       drawer: drawerApp(context),
       appBar: new AppBar(
         title: new Text(
-          "Курс валют",
+          "Выбор валюты",
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: Colors.black87,
@@ -32,28 +35,41 @@ class CurrencyGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(currencies);
-    return GridView.count(
-      primary: false,
-      padding: const EdgeInsets.all(20.0),
-      crossAxisSpacing: 10.0,
-      crossAxisCount: 2,
-      children: currencies.map((currencyInfo) {
-        return Card(
-          color: Colors.black87,
-          child: ListTile(
-              leading: Tab(
-                icon: Image.asset(
-                    "assets/flags/${currencyInfo.charCode[0].toLowerCase() + currencyInfo.charCode[1].toLowerCase()}_flag.png"),
-                //"assets/flag/ab_flag.png")
-                //загружаем картинку как иконку
-              ),
-              title: Text('${currencyInfo.charCode}', style: TextStyle(color: Colors.white),),
-              subtitle: Text(currencyInfo.name, style: TextStyle(color: Colors.white70)),
-              //onTap: ,
-          ),
-        );
-      }).toList(),
-    );
+    print(Navigator);
+    return new ListView(
+        shrinkWrap: true,
+        primary: false,
+        children: currencies.map((currency) {
+          return Card(
+            color: Colors.black87,
+            child: StoreConnector<AppState, OnAddConverterClicked>(
+              converter: (store) {
+                return (converter) => store.dispatch(AddConverter(converter));
+              },
+              builder: (context, callback) {
+                return
+                  ListTile(
+                    leading: Tab(
+                      icon: Image.asset(
+                          "assets/flags/${currency.charCode[0].toLowerCase() +
+                              currency.charCode[1].toLowerCase()}_flag.png"),
+                    ),
+                    title: Text(
+                      '${currency.charCode}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(currency.name,
+                        style: TextStyle(color: Colors.white70)),
+                    onTap: () {
+                      Navigator.pop(context);
+                      callback(Converter(currency: currency, value: 0.0));
+                    },
+                  );
+              }
+            ),
+          );
+        }).toList());
   }
 }
+
+typedef OnAddConverterClicked = Function(Converter converter);

@@ -18,7 +18,7 @@ import 'package:exchange_rates_flutter/model/Currency.dart';
 
 class Converter {
   final Currency currency;
-  final double value;
+  double value;
 
   Converter(
       {

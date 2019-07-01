@@ -14,7 +14,22 @@ class AddConverter {
 }
 
 class DeleteConverter {
- final int idConverter;
+ final Converter converter;
 
- DeleteConverter(this.idConverter);
+ DeleteConverter(this.converter);
 }
+
+class EditConverter {
+ final Converter converter;
+ double value;
+
+ EditConverter(this.value, this.converter);
+}
+
+class ChangeConverter {
+ final Converter converter;
+
+ ChangeConverter(this.converter);
+}
+
+class NullConverters {}

@@ -6,7 +6,7 @@ Widget drawerApp(BuildContext context) {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: Text('Drawer Header'),
+            child: Text('Курсы валют'),
             decoration: BoxDecoration(
               color: Colors.black54,
             ),
