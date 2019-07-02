@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:exchange_rates_flutter/redux/AppState.dart';
-import 'package:exchange_rates_flutter/redux/middleware.dart';
 import 'package:exchange_rates_flutter/converter/ConverterList.dart';
 import 'package:exchange_rates_flutter/common/Drawer.dart';
 

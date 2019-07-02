@@ -6,17 +6,18 @@ Widget drawerApp(BuildContext context) {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: Text('Курсы валют'),
+            child: Text('Курсы валют', style: TextStyle(fontSize: 20.0, color: Colors.white), textAlign: TextAlign.center,),
+
             decoration: BoxDecoration(
-              color: Colors.black54,
+              color: Colors.black87,
             ),
           ),
           ListTile(
-            title: Text('Курсы валют', ),
+            title: Text('Курсы валют', style: TextStyle(fontSize: 20.0)),
             leading: Icon(Icons.attach_money),
             onTap: () {
-              //Navigator.pop(context);
-              Navigator.pushNamed(context, '/currency');
+              Navigator.pop(context);
+              //Navigator.pushNamed(context, '/currency');
             },
           ),
           ListTile(

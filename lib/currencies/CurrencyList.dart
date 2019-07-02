@@ -17,7 +17,6 @@ class CurrencyList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     NumberFormat a = new NumberFormat();
-    print(currencies);
     return new ListView(
         shrinkWrap: true,
         primary: false,
@@ -28,8 +27,6 @@ class CurrencyList extends StatelessWidget {
                 leading: Tab(
                   icon: Image.asset(
                       "assets/flags/${currencyInfo.charCode[0].toLowerCase() + currencyInfo.charCode[1].toLowerCase()}_flag.png"),
-                  //"assets/flag/ab_flag.png")
-                  //загружаем картинку как иконку
                 ),
                 title: Text('${currencyInfo.nominal} ${ a.simpleCurrencySymbol(currencyInfo.charCode)} = ${currencyInfo.value} ₽', style: TextStyle(color: Colors.white),),
                 subtitle: Text(currencyInfo.name, style: TextStyle(color: Colors.white70)),

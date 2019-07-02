@@ -69,20 +69,8 @@ List<Converter> convertersReducer(AppState prevState, dynamic action) {
   }
 }
 
-//Converter currentConverterReducer(Converter prev, dynamic action) {
-//  if (action is ChangeConverter) {
-//    return action.converter;
-//  } else {
-//    return prev;
-//  }
-//}
 
-void saveConvertersToPref(List<Converter> converters) async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
-  var convertersString = json.encode(ConverterList(converters).toJson());
-  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
-}
 
 List<Converter> toZero(List<Converter> converters) {
   for(Converter converter in converters) {
@@ -111,24 +99,9 @@ List<Converter> changeCurrentConverter(List<Converter> converters, Converter cur
   return converters;
 }
 
-//List<Converter> loadConvertersFromPref() {
-//  SharedPreferences sharedPreferences;
-//  SharedPreferences.getInstance().then((value) => sharedPreferences = value) ;
-//  try {
-//    var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
-//    Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
-//    return new ConverterList.fromJson(convertersMap).converters;
-//  } catch(e) {
-//    return [];
-//  }
-//
-//}
 
 Future<List<Converter>> loadConvertersFromPref() async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-//  var stateString = sharedPreferences.getString(APP_STATE_KEY);
-//  Map stateMap = json.decode(stateString);
-//  return new ListData.fromJson(stateMap);
   try {
     var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
     Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
@@ -137,4 +110,11 @@ Future<List<Converter>> loadConvertersFromPref() async {
   } catch(e) {
     return [];
   }
+}
+
+void saveConvertersToPref(List<Converter> converters) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+  var convertersString = json.encode(ConverterList(converters).toJson());
+  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
 }

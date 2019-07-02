@@ -1,21 +1,5 @@
 import 'package:exchange_rates_flutter/model/Currency.dart';
 
-//class Converter {
-//  final int id;
-//  final Currency currencyFrom;
-//  final Currency currencyTo;
-//  final double convertFrom;
-//  final double convertTo;
-//
-//  Converter(
-//      {this.id,
-//        this.currencyFrom,
-//        this.currencyTo,
-//        this.convertFrom,
-//        this.convertTo,
-//      });
-//}
-
 class Converter {
   final Currency currency;
   double value;
@@ -28,13 +12,7 @@ class Converter {
         this.isCurrent = false,
       });
 
-//  Converter.fromJson(Map<String, dynamic> json)
-//      : currency = Currency.fromJson(json['currency']),
-//        value = json['value'],
-//        isCurrent = json['isCurrent'];
-
   factory Converter.fromJson(Map<String, dynamic> json) {
-    print(json);
     return Converter(
         currency: Currency.fromJson(json['currency']),
         value: json['value'],

@@ -32,33 +32,13 @@ class ViewModel {
         nullConverters: () {
           store.dispatch(NullConverters());
         },
-        //currentConverter: store.state.currentConverter,
     );
   }
 
-//  Future<List<Converter>> loadStateFromPref() async {
-//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-////  var stateString = sharedPreferences.getString(APP_STATE_KEY);
-////  Map stateMap = json.decode(stateString);
-////  return new ListData.fromJson(stateMap);
-//    try {
-//      var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
-//      Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
-//      return new ConverterList.fromJson(convertersMap).converters;
-//    } catch(e) {
-//      return [];
-//    }
-//  }
 
   static void addDefaultConverters(store, currencies) async {
     List<Converter> converters;
-//    var c = loadConvertersFromPref();
-//    c.then((state) {
-//      print(state);
-//      converters = state;
-//    });
     converters = await loadConvertersFromPref();
-    print(converters);
     if (converters==null || converters.length == 0) {
       store.dispatch(AddConverter(
           new Converter(currency: RUB, value: 1, isCurrent: true)));

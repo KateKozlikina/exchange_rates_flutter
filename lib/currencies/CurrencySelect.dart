@@ -35,7 +35,6 @@ class CurrencyGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Navigator);
     return new ListView(
         shrinkWrap: true,
         primary: false,
