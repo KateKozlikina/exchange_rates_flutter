@@ -15,7 +15,8 @@ Widget drawerApp(BuildContext context) {
             title: Text('Курсы валют', ),
             leading: Icon(Icons.attach_money),
             onTap: () {
-              Navigator.pop(context);
+              //Navigator.pop(context);
+              Navigator.pushNamed(context, '/currency');
             },
           ),
           ListTile(

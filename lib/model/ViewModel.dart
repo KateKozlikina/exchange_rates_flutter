@@ -10,9 +10,9 @@ class ViewModel {
   final Function deleteConverter;
   final Function changeConverter;
   final Function nullConverters;
-  final Converter currentConverter;
-
-  ViewModel({this.editConverter, this.deleteConverter, this.changeConverter, this.nullConverters, this.currentConverter });
+//  final Converter currentConverter;
+//
+  ViewModel({this.editConverter, this.deleteConverter, this.changeConverter, this.nullConverters });
 
   static ViewModel fromStore(Store<AppState> store) {
     return ViewModel(
@@ -28,7 +28,12 @@ class ViewModel {
         nullConverters: () {
           store.dispatch(NullConverters());
         },
-        currentConverter: store.state.currentConverter,
+        //currentConverter: store.state.currentConverter,
     );
+  }
+
+  static void addDefaultConverters(store, currencies){
+    store.dispatch(AddConverter(new Converter(currency: currencies.firstWhere((currency) => currency.charCode == 'USD'))));
+    store.dispatch(AddConverter(new Converter(currency: currencies.firstWhere((currency) => currency.charCode == 'EUR'))));
   }
 }

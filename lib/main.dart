@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         title: 'Курс валют',
           initialRoute: '/',
           routes: {
-            '/':(BuildContext context) => CurrenciesView(),
+            '/currency':(BuildContext context) => CurrenciesView(),
             '/converter':(BuildContext context) => ConverterView(),
             '/select-currency': (BuildContext context) => CurrencySelect()
           },
