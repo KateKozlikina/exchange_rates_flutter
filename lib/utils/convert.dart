@@ -1,4 +1,5 @@
 import 'package:exchange_rates_flutter/model/Converter.dart';
+import 'package:exchange_rates_flutter/redux/reducers.dart';
 List<Converter> convert({double value, Converter convertFrom, List<Converter> converters}) {
 
   List<Converter> newConverters = converters;
@@ -8,6 +9,6 @@ List<Converter> convert({double value, Converter convertFrom, List<Converter> co
     else
       converter.value = value;
   }
-  print(newConverters);
+  saveConvertersToPref(newConverters);
   return newConverters;
 }

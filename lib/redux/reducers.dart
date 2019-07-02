@@ -1,11 +1,13 @@
-
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:exchange_rates_flutter/redux/AppState.dart';
 import 'package:exchange_rates_flutter/redux/actions.dart';
 import 'package:exchange_rates_flutter/model/Currency.dart';
 import 'package:exchange_rates_flutter/model/Converter.dart';
+import 'package:exchange_rates_flutter/model/ConverterList.dart';
 import 'package:exchange_rates_flutter/utils/convert.dart';
 
-
+const String APP_CONVERTERS_KEY = "APP_CONVERTERS";
 AppState reducer(AppState state, action) {
   return AppState(
     currencies: currenciesReducer(state.currencies, action),
@@ -28,6 +30,7 @@ List<Converter> convertersReducer(AppState prevState, dynamic action) {
   if (action is AddConverter) {
     if (newConverters.isEmpty) {
       newConverters.add(action.converter);
+      saveConvertersToPref(newConverters);
       return newConverters;
     }
 
@@ -44,7 +47,9 @@ List<Converter> convertersReducer(AppState prevState, dynamic action) {
     if (action.converter.isCurrent) {
         newConverters[0].isCurrent = true;
         newConverters = toZero(newConverters);
+        return newConverters;
     }
+    saveConvertersToPref(newConverters);
     return newConverters;
 
   } else if (action is EditConverter){
@@ -55,6 +60,9 @@ List<Converter> convertersReducer(AppState prevState, dynamic action) {
 
   } else if(action is ChangeConverter) {
     return changeCurrentConverter(newConverters, action.converter);
+
+  } else if(action is LoadConverter) {
+    return action.converters;
 
   } else {
     return prevState.converters;
@@ -69,10 +77,18 @@ List<Converter> convertersReducer(AppState prevState, dynamic action) {
 //  }
 //}
 
+void saveConvertersToPref(List<Converter> converters) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+  var convertersString = json.encode(ConverterList(converters).toJson());
+  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
+}
+
 List<Converter> toZero(List<Converter> converters) {
   for(Converter converter in converters) {
     converter.value = 0;
   }
+  saveConvertersToPref(converters);
   return converters;
 }
 
@@ -91,5 +107,34 @@ List<Converter> changeCurrentConverter(List<Converter> converters, Converter cur
     else
       converter.isCurrent = false;
   }
+  saveConvertersToPref(converters);
   return converters;
+}
+
+//List<Converter> loadConvertersFromPref() {
+//  SharedPreferences sharedPreferences;
+//  SharedPreferences.getInstance().then((value) => sharedPreferences = value) ;
+//  try {
+//    var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
+//    Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
+//    return new ConverterList.fromJson(convertersMap).converters;
+//  } catch(e) {
+//    return [];
+//  }
+//
+//}
+
+Future<List<Converter>> loadConvertersFromPref() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//  var stateString = sharedPreferences.getString(APP_STATE_KEY);
+//  Map stateMap = json.decode(stateString);
+//  return new ListData.fromJson(stateMap);
+  try {
+    var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
+    Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
+    List<Converter> list =  new ConverterList.fromJson(convertersMap).converters;
+    return new ConverterList.fromJson(convertersMap).converters;
+  } catch(e) {
+    return [];
+  }
 }

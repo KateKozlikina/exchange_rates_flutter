@@ -16,7 +16,9 @@ class Currency {
         this.value,
         this.previous});
 
+  Map<String, dynamic> toJson() => {'ID': id, 'NumCode': numCode, 'CharCode': charCode, 'Nominal': nominal, 'Name': name, 'Value': value, 'Previous': previous  };
   factory Currency.fromJson(Map<String, dynamic> json) {
+    print(json);
     return Currency(
       id: json['ID'],
       numCode: json['NumCode'],

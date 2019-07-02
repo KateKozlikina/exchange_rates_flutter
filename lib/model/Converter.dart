@@ -28,12 +28,25 @@ class Converter {
         this.isCurrent = false,
       });
 
-  Converter.fromJson(Map<String, dynamic> json)
-      : currency = json['currency'],
-        value = json['value'],
-        isCurrent = json['isCurrent'];
+//  Converter.fromJson(Map<String, dynamic> json)
+//      : currency = Currency.fromJson(json['currency']),
+//        value = json['value'],
+//        isCurrent = json['isCurrent'];
 
-  Map<String, dynamic> toJson() => {'currency': currency, 'value': value, 'isCurrent': isCurrent};
+  factory Converter.fromJson(Map<String, dynamic> json) {
+    print(json);
+    return Converter(
+        currency: Currency.fromJson(json['currency']),
+        value: json['value'],
+        isCurrent: json['isCurrent'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'currency': Currency(id:currency.id, name: currency.name, charCode: currency.charCode, numCode: currency.numCode, nominal: currency.nominal, value: currency.value, previous: currency.previous).toJson(),
+    'value': value,
+    'isCurrent': isCurrent,
+  };
 
   @override
   String toString() {

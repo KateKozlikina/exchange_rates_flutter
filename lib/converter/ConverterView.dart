@@ -18,6 +18,7 @@ class ConverterView extends StatelessWidget {
         backgroundColor: Colors.black87,
       ),
       body: StoreConnector<AppState, AppState>(
+
         converter: (store) => store.state,
         builder: (context, state) => ConverterList(state.currencies, state.converters),
       ),

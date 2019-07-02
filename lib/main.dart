@@ -13,10 +13,12 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   final Store<AppState> store = Store<AppState>(
     reducer,
     initialState: AppState.initial(),
     middleware: [thunkMiddleware],
+
   );
   @override
   Widget build(BuildContext context) => StoreProvider(
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'Курс валют',
           initialRoute: '/',
           routes: {
-            '/currency':(BuildContext context) => CurrenciesView(),
+            '/':(BuildContext context) => CurrenciesView(),
             '/converter':(BuildContext context) => ConverterView(),
             '/select-currency': (BuildContext context) => CurrencySelect()
           },

@@ -9,10 +9,13 @@ class AppState {
 
   AppState({this.currencies, this.converters, this.currentConverter});
 
+
   factory AppState.initial() => AppState(
     currencies: List.unmodifiable([]),
     //converters: List.unmodifiable([new Converter(id:0, currencyFrom: RUB, currencyTo: RUB, convertFrom: 1, convertTo: 1)]),
+    //converters: [new Converter(currency: RUB, value: 1, isCurrent: true)].toList(),
     converters: [new Converter(currency: RUB, value: 1, isCurrent: true)].toList(),
     currentConverter: new Converter(currency: RUB, value: 1),
   );
 }
+

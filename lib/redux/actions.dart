@@ -1,5 +1,6 @@
 import 'package:exchange_rates_flutter/model/Currency.dart';
 import 'package:exchange_rates_flutter/model/Converter.dart';
+import 'package:exchange_rates_flutter/model/ConverterList.dart';
 
 class GetCurrencies {
  final List<Currency> currencies;
@@ -30,6 +31,12 @@ class ChangeConverter {
  final Converter converter;
 
  ChangeConverter(this.converter);
+}
+
+class LoadConverter {
+ final List<Converter> converters;
+
+ LoadConverter(this.converters);
 }
 
 class NullConverters {}

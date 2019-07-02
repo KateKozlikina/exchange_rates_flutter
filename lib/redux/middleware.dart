@@ -7,6 +7,7 @@ import 'package:exchange_rates_flutter/redux/AppState.dart';
 import 'package:exchange_rates_flutter/redux/actions.dart';
 import 'package:exchange_rates_flutter/model/ConverterList.dart';
 import 'package:exchange_rates_flutter/model/CurrencyList.dart';
+import 'package:exchange_rates_flutter/model/Converter.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 
 //List<Middleware<AppState>> createStoreMiddleware() => [
@@ -49,15 +50,50 @@ ThunkAction<AppState> getCurrencies = (Store<AppState> store) async {
 //  store.dispatch(new GetCurrencies(currencies.currencies));
 //};
 
-void saveConvertersToPref(ConverterList currency) async {
-  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  var convertersString = json.encode(currency.toJson());
-  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
-}
 
-Future<ConverterList> loadConvertersFromPref() async {
+ThunkAction<AppState> loadConverters = (Store<AppState> store) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
   Map convertersMap = json.decode(convertersString);
-  return new ConverterList.fromJson(convertersMap);
+  ConverterList converterList = ConverterList.fromJson(convertersMap);
+  store.dispatch(new LoadConverter(converterList.converters));
+};
+
+ThunkAction<AppState> saveConverters = (Store<AppState> store) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  ConverterList converterList = new ConverterList(store.state.converters);
+  var convertersString = json.encode(converterList.toJson());
+  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
+};
+
+//void saveConvertersToPref(ConverterList currency) async {
+//  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//  var convertersString = json.encode(currency.toJson());
+//  await sharedPreferences.setString(APP_CONVERTERS_KEY, convertersString);
+//}
+//
+List<Converter> loadConvertersFromPref() {
+  SharedPreferences sharedPreferences;
+  SharedPreferences.getInstance().then((value) => sharedPreferences = value) ;
+  try {
+    var convertersString = sharedPreferences.getString(APP_CONVERTERS_KEY);
+    Map convertersMap = json.decode(convertersString!=null ? convertersString : '');
+    return new ConverterList.fromJson(convertersMap).converters;
+  } catch(e) {
+      return [];
+  }
+
 }
+
+//List<Converter> loadList() {
+//  List<Converter> b;
+//  loadConvertersFromPref().then((value) {
+//    return value.converters;
+//  }).catchError(() => []);
+//
+//  return b;
+//}
+//
+//Future<SharedPreferences> getInstanceSP() async {
+//  return await SharedPreferences.getInstance().;
+//}
