@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_redux/flutter_redux.dart';
+
 import 'package:exchange_rates_flutter/redux/AppState.dart';
 import 'package:exchange_rates_flutter/redux/middleware.dart';
+
 import 'package:exchange_rates_flutter/currencies/CurrencyList.dart';
 import 'package:exchange_rates_flutter/common/Drawer.dart';
-class CurrenciesView extends StatelessWidget {
+import 'package:exchange_rates_flutter/common/Loader.dart';
 
+class CurrenciesView extends StatelessWidget {
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return new Scaffold(
       drawer: drawerApp(context),
       appBar: new AppBar(
@@ -19,7 +23,12 @@ class CurrenciesView extends StatelessWidget {
       ),
       body: StoreBuilder<AppState>(
         onInit: (store) => store.dispatch(getCurrencies),
-        builder: (context, store) => CurrencyList(store.state.currencies),
+        builder: (context, store) {
+          if (store.state.isLoading) {
+            return new Loader();
+          }
+          return CurrencyList(store.state.currencies);
+        },
       ),
     );
   }

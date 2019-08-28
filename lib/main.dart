@@ -3,7 +3,7 @@ import 'package:redux/redux.dart';
 
 import 'package:exchange_rates_flutter/redux/AppState.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:exchange_rates_flutter/redux/reducers.dart';
+import 'package:exchange_rates_flutter/redux/reducers/app_reducer.dart';
 import 'package:redux_thunk/redux_thunk.dart';
 import 'package:exchange_rates_flutter/converter/ConverterView.dart';
 import 'package:exchange_rates_flutter/currencies/CurrenciesView.dart';
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
   final Store<AppState> store = Store<AppState>(
-    reducer,
+    appReducer,
     initialState: AppState.initial(),
     middleware: [thunkMiddleware],
 

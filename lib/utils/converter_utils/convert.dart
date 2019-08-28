@@ -1,5 +1,5 @@
 import 'package:exchange_rates_flutter/model/Converter.dart';
-import 'package:exchange_rates_flutter/redux/reducers.dart';
+import 'package:exchange_rates_flutter/utils/preference_utils/saveConvertersToPref.dart';
 List<Converter> convert({double value, Converter convertFrom, List<Converter> converters}) {
 
   List<Converter> newConverters = converters;

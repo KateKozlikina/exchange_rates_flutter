@@ -9,9 +9,11 @@ class CurrencyList extends StatelessWidget {
 
   Widget currencyDiff(double value, double previous) {
     num diff = value - previous;
-    if(diff >= 0)
-      return Text('+${diff.toStringAsFixed(4)} ▲', style: TextStyle(color: Colors.green));
-    return Text('${diff.toStringAsFixed(4)} ▼', style: TextStyle(color: Colors.red));
+    if (diff >= 0)
+      return Text('+${diff.toStringAsFixed(4)} ▲',
+          style: TextStyle(color: Colors.green));
+    return Text('${diff.toStringAsFixed(4)} ▼',
+        style: TextStyle(color: Colors.red));
   }
 
   @override
@@ -28,10 +30,14 @@ class CurrencyList extends StatelessWidget {
                   icon: Image.asset(
                       "assets/flags/${currencyInfo.charCode[0].toLowerCase() + currencyInfo.charCode[1].toLowerCase()}_flag.png"),
                 ),
-                title: Text('${currencyInfo.nominal} ${ a.simpleCurrencySymbol(currencyInfo.charCode)} = ${currencyInfo.value} ₽', style: TextStyle(color: Colors.white),),
-                subtitle: Text(currencyInfo.name, style: TextStyle(color: Colors.white70)),
-                trailing: currencyDiff(currencyInfo.value, currencyInfo.previous)
-            ),
+                title: Text(
+                  '${currencyInfo.nominal} ${a.simpleCurrencySymbol(currencyInfo.charCode)} = ${currencyInfo.value} ₽',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text(currencyInfo.name,
+                    style: TextStyle(color: Colors.white70)),
+                trailing:
+                    currencyDiff(currencyInfo.value, currencyInfo.previous)),
           );
         }).toList());
   }

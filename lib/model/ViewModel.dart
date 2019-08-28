@@ -1,12 +1,12 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:redux/redux.dart';
 
 import 'package:exchange_rates_flutter/redux/AppState.dart';
-import 'package:exchange_rates_flutter/redux/actions.dart';
+import 'package:exchange_rates_flutter/redux/actions/converter_actions.dart';
 import 'package:exchange_rates_flutter/model/Converter.dart';
+import 'package:exchange_rates_flutter/model/Currency.dart';
 import 'package:exchange_rates_flutter/constanst/index.dart';
-import 'package:exchange_rates_flutter/redux/reducers.dart';
+import 'package:exchange_rates_flutter/utils/preference_utils/loadConvertersFromPref.dart';
 
 class ViewModel {
   final Function editConverter;
@@ -36,18 +36,22 @@ class ViewModel {
   }
 
 
-  static void addDefaultConverters(store, currencies) async {
+  static void addDefaultConverters(Store<AppState> store) async {
     List<Converter> converters;
+    List<Currency> currencies = store.state.currencies;
     converters = await loadConvertersFromPref();
     if (converters==null || converters.length == 0) {
       store.dispatch(AddConverter(
           new Converter(currency: RUB, value: 1, isCurrent: true)));
       store.dispatch(AddConverter(new Converter(
           currency: currencies.firstWhere((currency) => currency.charCode ==
-              'USD'))));
+              'USD'),
+          isCurrent: false,
+      )));
       store.dispatch(AddConverter(new Converter(
           currency: currencies.firstWhere((currency) => currency.charCode ==
-              'EUR'))));
+              'EUR'),
+          isCurrent: false)));
     }
     else {
       store.dispatch(LoadConverter(converters));

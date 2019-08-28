@@ -1,0 +1,7 @@
+class loadingData {
+
+}
+
+class notLoadingData {
+
+}

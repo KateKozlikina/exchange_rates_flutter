@@ -1,4 +1,7 @@
 import 'package:exchange_rates_flutter/model/Currency.dart';
+
+const String APP_CONVERTERS_KEY = "APP_CONVERTERS";
+
 Currency RUB = new Currency(
   id: '0000',
   numCode: '000',

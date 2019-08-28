@@ -25,6 +25,8 @@ dependencies:
   redux_thunk: ^0.2.0
   intl: ^0.15.8
   shared_preferences: "^0.4.2"
+  flutter_launcher_icons: ^0.7.2+1
+  flutter_spinkit: ^2.1.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -35,6 +37,10 @@ dev_dependencies:
     sdk: flutter
 
 
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/exchange.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
 
@@ -42,6 +48,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/flags/
+    - assets/icons/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
